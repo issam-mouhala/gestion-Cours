@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panneau d'Administration</title>
+  <link rel="stylesheet" href="admin.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+
+</head>
+<style>
+  .repondre{
+    overflow-y: scroll;
+    height: 200px;
+  }
+</style>
+<body class="bg-gray-50 min-h-screen">
+  <header class="bg-gray-100 py-6 shadow">
+    <h1 class="text-center text-3xl text-blue-800 font-semibold">Panneau d'Administration</h1>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4">
+    <div  class="flex justify-between items-center my-20 px-10">
+      <h2 class="text-2xl font-bold text-blue-900">Tableau de bord</h2>
+      <a href="signin.html">      <button class="bg-white border border-blue-700 text-blue-700 py-1 px-3 rounded hover:bg-blue-50">Se déconnecter</button>
+</a>
+    </div>
+
+    <div id="bord" class="flex space-x-4 border-b border-gray-200 mt-4">
+      <button id="btn-pub" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-blue-700 active">Publications</button>
+      <button id="btn-cours" class="px-4 py-2 text-sm font-medium text-gray-400 hover:text-blue-700">Cours</button>
+      <button id="btn-users"  class="px-4 py-2 text-sm font-medium text-gray-400 hover:text-blue-700">users</button>
+      <button id="btn-forum" class="px-4 py-2 text-sm font-medium text-gray-400 hover:text-blue-700">Forum</button>
+      <button id="btn-contact" class="px-4 py-2 text-sm font-medium text-gray-400 hover:text-blue-700">Contact</button>
+      <button id="btn-contact" class="px-4 py-2 text-sm font-medium text-gray-400 hover:text-blue-700">Statistiques</button>
+    </div>
+
+    <section id="pub" class="bg-white mt-4 p-6 rounded shadow">
+      <h3 class="text-xl font-bold text-gray-800 mb-1">Gérer les Publications</h3>
+      <p class="text-sm text-gray-500 mb-4">Ajoutez ou modifiez des publications</p>
+<form >
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <input required type="text" id="titre" placeholder="Titre de la publication" class="border rounded px-3 py-2">
+        <input required type="text" id="auteurs" placeholder="Noms des auteurs" class="border rounded px-3 py-2">
+        <input required type="text" id="journal" placeholder="Journal ou conférence" class="border rounded px-3 py-2">
+        <input required type="text" id="annee" placeholder="Année de publication" class="border rounded px-3 py-2">
+        <select required id="type" class="border rounded px-3 py-2">
+          <option>Sélectionnez un type</option>
+          <option>Article</option>
+          <option>Conférence</option>
+          <option>Cours</option>
+        </select>
+        <select required id="sujet" class="border rounded px-3 py-2">
+          <option>Sélectionnez un sujet</option>
+          <option>IA</option>
+          <option>Sécurité</option>
+          <option>Information</option>
+          <option>Etude</option>
+        </select>
+      </div>
+</form>
+      <div class="mt-4 text-right">
+        <button id="ajouter" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Ajouter Publication</button>
+      </div>
+
+      <div class="mt-8">
+        <h4 class="text-lg font-semibold text-gray-700">Publications existantes</h4>
+        <p class="text-sm text-gray-500">La liste des publications serait affichée ici avec des options pour modifier ou supprimer.</p>
+        <ul id="liste-publications" class="mt-4 space-y-2"></ul>
+      </div>
+    </section>
+    <section id="users" class="hidden bg-white mt-4 p-6 rounded shadow">
+      <h3 class="text-xl font-bold text-gray-800 mb-1">Gérer les users</h3>
+      <p class="text-sm text-gray-500 mb-4">Ajoutez ou modifiez des user</p>
+<form >
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <input required type="text" id="nom" placeholder="Utilisateur nom" class="border rounded px-3 py-2">
+        <input required type="text" id="prenom" placeholder="Utilisateur prenom" class="border rounded px-3 py-2">
+        <input required type="text" id="email" placeholder="Utilisateur email" class="border rounded px-3 py-2">
+        <input required type="text" id="password" placeholder="Utilisateur password" class="border rounded px-3 py-2">
+        <input required type="file" accept="png" id="avatar" placeholder="Utilisateur image" class="border rounded px-3 py-2">
+       
+      </div>
+</form>
+      <div class="mt-4 text-right">
+        <button id="ajouter_user" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Ajouter user</button>
+      </div>
+
+      <div class="mt-8">
+        <h4 class="text-lg font-semibold text-gray-700">Users existantes</h4>
+        <p class="text-sm text-gray-500">La liste des users serait affichée ici avec des options pour modifier ou supprimer.</p>
+        <ul id="liste-users" class="mt-4 space-y-2"></ul>
+      </div>
+    </section>
+    
+    <section id="cours" class="hidden bg-white mt-4 p-6 rounded shadow">
+      <form >
+        <h3 class="text-xl font-bold text-gray-800 mb-1">Gérer les Cours</h3>
+        <p class="text-sm text-gray-500 mb-4">Ajoutez ou modifiez des cours et leur contenu</p>
+        <div class="space-y-4">
+          <input required type="text" id="titreCours" placeholder="Titre du cours" class="w-full border rounded px-3 py-2">
+          <textarea required id="descriptionCours" placeholder="Description du cours" rows="3" class="w-full border rounded px-3 py-2"></textarea>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input required type="text" id="semestre" placeholder="Ex: Automne 2023" class="border rounded px-3 py-2">
+            <select required id="niveau" class="border rounded px-3 py-2">
+              <option>Sélectionnez un niveau</option>
+              <option>Licence</option>
+              <option>Master</option>
+              <option>Doctorat</option>
+            </select>
+          </div>
+          <div class="text-right">
+            <button id="ajouterCours" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Ajouter Cours</button>
+          </div>
+        </div>
+      </form> 
+      <form  id="">
+        <h3 class="text-xl font-bold text-gray-800 mb-1">Gérer les Materills</h3>
+        <p class="text-sm text-gray-500 mb-4">Ajoutez ou modifiez des Materills et leur contenu</p>
+        <div class="space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input required type="file" accept="application/pdf" name="pdf" id="pdf" placeholder="Ex: PDF.pdf" class="border rounded px-3 py-2">
+            <br>
+            <select id="cours_syllabus" required  class="border rounded px-3 py-2" name="cours">
+              <option>Sélectionnez un cours</option>
+            </select>
+            <select id="syllabus" required  class="border rounded px-3 py-2" name="syllabus">
+              <option >Sélectionnez un syllabus</option>
+            </select>
+            
+          </div>
+          <div class="text-right">
+            <button id="ajouterM" type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Ajouter Materills</button>
+          </div>
+        </div>
+      </form> 
+        <div class="mt-8">
+          <h4 class="text-lg font-semibold text-gray-700">Cours existants</h4>
+          <p class="text-sm text-gray-500">La liste des cours serait affichée ici avec des options pour modifier ou supprimer.</p>
+          <ul id="liste-cours" class="mt-4 space-y-2">
+
+          </ul>
+        </div>
+      </section>
+      <!-- Section Forum -->
+<section id="forum"class="hidden bg-white mt-10 p-6 rounded shadow">
+
+    <h3 class="text-xl font-bold text-gray-800 mb-1">Gérer le Forum</h3>
+    <p class="text-sm text-gray-500 mb-4">Surveillez et modérez les discussions du forum</p>
+    <h4 class="text-lg font-semibold text-gray-700 mt-8 mb-2">Statistiques du Forum</h4>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+      <div class="bg-gray-100 p-4 rounded shadow-sm">
+        <p id="qt" class="text-2xl font-bold text-blue-800"></p>
+        <p  class="text-sm text-gray-600">Questions</p>
+      </div>
+      <div class="bg-gray-100 p-4 rounded shadow-sm">
+        <p id="rp" class="text-2xl font-bold text-blue-800">0</p>
+        <p class="text-sm text-gray-600">Réponses</p>
+      </div>
+      <div class="bg-gray-100 p-4 rounded shadow-sm">
+        <p id="user" class="text-2xl font-bold text-blue-800">5</p>
+        <p class="text-sm text-gray-600">Utilisateurs actifs</p>
+      </div>
+    </div>
+  
+    <h4 class="text-lg font-semibold text-gray-700 mb-2">Questions récentes</h4>
+    <div id="comment" class="space-y-4">    
+    </div>
+  
+   
+  </section>
+  <section id="contact"class="hidden bg-white mt-10 p-6 rounded shadow">
+
+    <h3 class="text-xl font-bold text-gray-800 mb-1">Gérer le contact</h3>
+    <p class="text-sm text-gray-500 mb-4">Surveillez et modérez les discussions du contact</p>
+    <h4 class="text-lg font-semibold text-gray-700 mt-8 mb-2">Statistiques du contact</h4>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+      <div class="bg-gray-100 p-4 rounded shadow-sm">
+        <p id="qt-contact" class="text-2xl font-bold text-blue-800"></p>
+        <p  class="text-sm text-gray-600">Questions</p>
+      </div>
+    </div>
+  
+    <h4 class="text-lg font-semibold text-gray-700 mb-2">Questions de contact</h4>
+    <div id="contacts" class="space-y-4">    
+    </div>
+  
+   
+  </section>
+  
+  <section id="statique"class="bg-white mt-10 p-6 rounded shadow">
+
+    <h3 class="text-xl font-bold text-gray-800 mb-1">Les Statistiques</h3>
+    <div style="display: flex;">
+      <div
+id="myChart" style="width:100%; max-width:600px; height:500px;">
+</div>
+<div
+id="myChart2" style="width:100%; max-width:600px; height:500px;">
+</div> 
+    </div>
+   
+  </section>
+  </div>
+  <script>
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    
+    function drawChart() {
+    
+    // Set Data
+    const data = google.visualization.arrayToDataTable([
+      ['Etudiants', 'filiere'],
+      ['MGSI',54.8],
+      ['IL',48.6],
+      ['BD',44.4],
+      ['SIT',23.9]
+        ]);
+    
+    // Set Options
+    const options = {
+      title:'Etudiants',
+      is3D:true
+    };
+    
+    // Draw
+    const chart = new google.visualization.PieChart(document.getElementById('myChart'));
+    chart.draw(data, options);
+    const chart2 = new google.visualization.PieChart(document.getElementById('myChart2'));
+    chart2.draw(data, options);
+    
+    }
+    </script>
+  <script>
+            const comments = [];
+            const contacts = [];
+// Ajouter ce code dans la section <script>
+$(document).ready(function () {
+  // Charger les cours et publications au démarrage
+  loadCourses();
+  loadPublications();
+  loadUsers();
+
+  // Gestion de l'ajout de cours
+  $('#ajouterCours').click(function () {
+    if($('input, select').val()=="") {
+          alert("Champe vide??")
+          return
+        }
+    const cours = {
+      titre: $('#titreCours').val(),
+      description: $('#descriptionCours').val(),
+      semestre: $('#semestre').val(),
+      niveau: $('#niveau').val()
+    };
+
+    $.ajax({
+      type: 'POST',
+      url: 'add_course.php',
+      data: cours,
+      success: function () {
+        loadCourses();
+        $('input, select,textarea').val('');
+      }
+    });
+  
+
+  // Gestion de l'ajout de publication (version base de données)
+  $('#ajouter').click(function () {
+    if($('input, select').val()=="") {
+          alert("Champe vide??")
+          return
+        }
+    const publication = {
+      titre: $('#titre').val(),
+      auteurs: $('#auteurs').val(),
+      journal: $('#journal').val(),
+      annee: $('#annee').val(),
+      type: $('#type').val(),
+      sujet: $('#sujet').val()
+    };
+
+    $.ajax({
+      type: 'POST',
+      url: 'add_publications.php',
+      data: publication,
+      success: function (response) {
+          console.log(response)
+        loadPublications();
+        $('input, select').val('');
+        
+        
+      }
+    });
+  });
+});
+$('#ajouter_user').click(function () {
+    if($('#users input,#users select').val()=="") {
+          alert("Champe vide??")
+          return
+        }
+        const formData = new FormData();
+formData.append('nom', $('#nom').val());
+formData.append('prenom', $('#prenom').val());
+formData.append('email', $('#email').val());
+formData.append('password', $('#password').val());
+formData.append('avatar', $('#avatar')[0].files[0]); // fichier réel
+
+
+    $.ajax({
+      type: 'POST',
+      url: 'add_user.php',
+      data: formData,
+  processData: false,
+  contentType: false,
+      success: function (response) {
+          console.log(response)
+        loadUsers();
+        $('input, select').val('');
+        
+        
+      }
+    });
+  });
+});
+// Fonction pour charger les cours
+function loadCourses() {
+ 
+  
+  $.ajax({
+    url: 'get_courses.php',
+    success: function (response) {
+      $('#cours_syllabus').html(`
+      <option  value="0">Sélectionnez un cours</option>`);
+      $('#cours_syllabus').append(response.map(c => `
+      <option value="${c.id}">${c.titre}</option>
+
+      `).join(''));
+      $("#cours_syllabus").on("click",()=>{
+    $.ajax({
+    url: 'get_syllabus.php',
+    data:{id:$("#cours_syllabus").val()},
+    method:'POST',
+    success: function (response) {
+      $('#syllabus').html(`
+      <option>Sélectionnez un syllabus</option>`);
+      $('#syllabus').append(response.map(c => `
+      <option>${c.titre_syllabus}</option>
+
+      `).join(''));
+    }
+  });  
+  })
+  $('#ajouterMa').on("submit",function (e) {
+e.preventDefault()
+
+
+    $.ajax({
+      type: 'POST',
+      url: 'add_materils.php',
+      data:  $('#ajouterMa').serialize(),
+  processData: false,
+  contentType: false,
+      success: function (response) {
+          console.log(response)
+        loadUsers();
+        $('input, select').val('');
+        
+        
+      }
+    });
+  });
+    }
+  });
+ $.ajax({
+    url: 'get_courses.php',
+    success: function (response) {
+      $('#liste-cours').html(response.map(c => `
+        <li class="border p-3 rounded bg-gray-100">
+          <strong>
+            <span class="w-24 bg-purple-100 text-purple-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-purple-900 dark:text-purple-300"> Titre :</span>
+
+            ${c.titre}</strong><br>
+          
+          <span class="w-24 bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300"> description : </span>
+          <br>
+          ${c.description}<br>
+          <em> 
+            <span class=" bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300">Semestre :</span>
+            ${c.semestre} 
+            </em>  
+            <span class=" bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300">Niveau : </span>
+
+            ${c.niveau}
+          <br>
+          <button data-id="${c.id}" class="supprimer-cours supprimer ml-2 px-2 py-1 text-sm text-red-600">Supprimer</button>
+        </li>
+      `).join(''));
+    }
+  });
+}
+function loadUsers() {
+  $.ajax({
+    url: 'get_users.php',
+    success: function (response) {
+      console.log("x")
+      $('#liste-users').html(response.map(c => `
+        <li class="border p-3 rounded bg-gray-100">
+          <strong>${c.nom}  ${c.prenom}</strong><br>
+          <em>${c.email}</em> 
+          <br>
+
+          <button data-id="${c.id}" class="supprimer-users supprimer ml-2 px-2 py-1 text-sm text-red-600">Supprimer</button>
+        </li>
+      `).join(''));
+    }
+  });
+}
+// Fonction pour charger les publications
+function loadPublications() {
+  $.ajax({
+    url: 'get_publications.php',
+    success: function (response) {
+      $('#liste-publications').html(response.map(p => `
+        <li class="border p-3 rounded bg-gray-100">
+          <strong>Titre : ${p.title}</strong> - author : ${p.author} (${p.year})<br>
+          <em>Date de creation : ${p.created_at}</em> | type :  ${p.type} - sujet :${p.subject}
+          <br>
+
+          <button data-id="${p.id}" class="supprimer-pub supprimer ml-2 px-2 py-1 text-sm text-red-600">Supprimer</button>
+        </li>
+      `).join(''));
+    }
+  });
+}
+
+// Suppression des cours/publications
+$(document).on('click', '.supprimer-cours, .supprimer-pub,.supprimer-users,.supprimer-contact', function () {
+  let type = $(this).hasClass('supprimer-cours') ? 'course' : $(this).hasClass('supprimer-pub') ? 'publication':'users';
+   type=$(this).hasClass('supprimer-contact')? 'contact' : type
+  
+  $.ajax({
+    type: 'POST',
+    url: 'remove.php',
+    data: {
+      id: $(this).data('id'),
+      type: type
+    },
+    success: function () {
+      if (type === 'course') loadCourses();
+      else if(type ==='publication') loadPublications()
+      else loadUsers();
+    }
+  });
+});
+    $(document).ready(function () {
+          main()
+
+          function main() {
+  $.ajax({
+    type: 'POST',
+    url: 'get_comment.php',
+    dataType: 'json',
+    success: function (response) {
+      $("#loading").remove();
+      $("#comment").html("");
+
+      response.forEach((c) => {
+        comments.push({ comment: c.comment, id: c.id, user: c.nom, cours: c.titre, date: c.date });
+
+        let commentHtml = `
+          <form class="commentaire">
+            <input name="id" type="hidden" value="${c.id}">
+            <input name="type" type="hidden" value="delete">
+
+            <div class="border rounded p-4 bg-gray-50">
+              <p class="font-semibold text-gray-800">
+                <span class="w-24 bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-green-900 dark:text-green-300">contant : 
+</span>
+${c.comment}
+                </p>
+              <p class="text-sm text-gray-500">
+                <span class=" bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300">user : </span>
+                ${c.nom}
+                <span class="w-24 bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300">date : </span>
+                ${c.date}
+
+              
+                  </p>
+              <p class="text-sm text-gray-500">
+                <span class="w-24 bg-purple-100 text-purple-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-purple-900 dark:text-purple-300"> Cours:</span>
+                ${c.titre}
+               </p>
+              <div class="mt-2 space-x-2">
+                <button type="submit" class="supprimer px-3 py-1 text-sm text-red-600 border border-red-600 rounded hover:bg-red-50">Supprimer</button>
+              </div>
+            </div>
+          </form>
+
+        `;
+    
+   
+
+        $.ajax({
+          type: 'POST',
+          url: 'get_repondre.php',
+          data: { id: c.id },
+          success: function (response2) {
+            if (response2 && response2.length) 
+          
+{
+              commentHtml += `
+                <div   id="repondre" class="repondre px-3 py-1 text-sm text-red-600 border border-red-600 rounded hover:bg-red-50">Repndres
+
+                `;
+                $("#rp").text( + $("#rp").text()+response2.length);
+
+              response2.forEach(e => {
+                commentHtml += `
+                  <form class="mx-5">
+                    <input name="id" type="hidden" value="${e.id}">
+                    <input name="type" type="hidden" value="repondre">
+                    <div class="border rounded p-4 bg-gray-20">
+                      <p class="font-semibold text-gray-800">${e.content}</p>
+                      <p class="text-sm text-gray-500">Par: ${e.nom} | ${e.date}</p>
+                      <div class="mt-2 space-x-2">
+                        <button  type="submit" class="supprimer px-3 py-1 text-sm text-red-600 border border-red-600 rounded hover:bg-red-50">Supprimer</button>
+                      </div>
+                    </div>
+                  </form>
+                `;
+              });
+              commentHtml += `</div>`;
+            }
+            $("#comment").append(commentHtml);
+        },
+          error: function (xhr, status, error) {
+            console.error('Erreur AJAX :', error);
+          }
+        });
+      });
+
+      $("#qt").text(comments.length);
+    },
+    error: function () {
+      $("#loading").text("Erreur lors du chargement des publications.");
+    }
+  });
+  
+  $.ajax({
+    type: 'POST',
+    url: 'get_contact.php',
+    dataType: 'json',
+    success: function (response) {
+      $("#contacts").html("");
+      contacts.length=0
+      response.forEach((c) => {
+        contacts.push({ nom: c.nom, id: c.id, email: c.email, message: c.message, sujet: c.sujet });
+
+        let contacthtml = `
+          <form>
+            <input name="id" type="hidden" value="${c.id}">
+            <input name="type" type="hidden" value="contact">
+
+            <div class="border rounded p-4 bg-gray-50">
+              <p class="font-semibold text-gray-800">Sujet : ${c.sujet}</p>
+              <p class="text-sm text-gray-500">Par: ${c.nom} | ${c.email}</p>
+              <p class="text-sm text-gray-500">message: ${c.message}</p>
+              <div class="mt-2 space-x-2">
+                <button type="submit" class="supprimer-contact supprimer px-3 py-1 text-sm text-red-600 border border-red-600 rounded hover:bg-red-50">Supprimer</button>
+                <a href="mailto:${c.email}?subject=${c.sujet}" class="contact px-3 py-1 text-sm text-red-600 border  rounded hover:bg-red-50">Contacter</a>
+              </div>
+            </div>
+          </form>
+        `;
+      $("#contacts").append(contacthtml);
+
+      });
+
+      $("#qt-contact").text(contacts.length);
+    console.log(contacts)
+    },
+    error: function () {
+      $("#loading").text("Erreur lors du chargement des publications.");
+    }
+  });
+}
+
+// Événement global pour la suppression
+$(document).on("submit", "form", function (e) {
+  e.preventDefault();
+  $.ajax({
+    type: 'POST',
+    url: 'remove.php',
+    data: $(this).serialize(),
+    success: function (response) {
+      console.log(response);
+      main();
+    },
+    error: function (xhr, status, error) {
+      console.error('Erreur AJAX :', error);
+    }
+  });
+});
+
+  
+    });
+    $("#btn-cours").on("click",()=>{
+      $("#btn-contact").removeClass("text-gray-600 active")
+        $("#btn-contact").addClass("text-gray-400 ")
+        $("#contact").addClass("hidden")
+        $("#cours").removeClass("hidden")
+        $("#pub").addClass("hidden")
+        $("#forum").addClass("hidden")
+        $("#users").addClass("hidden") 
+        $("#btn-users").removeClass("text-gray-600 active")
+        $("#btn-users").addClass("text-gray-400 ")
+        $("#btn-pub").removeClass("text-gray-600 active")
+        $("#btn-pub").addClass("text-gray-400 ")
+        $("#btn-forum").removeClass("text-gray-600 active")
+        $("#btn-forum").addClass("text-gray-400 ")
+       
+        $("#btn-cours").addClass("text-gray-600 active")
+    })
+    $("#btn-pub").on("click",()=>{
+      $("#btn-contact").removeClass("text-gray-600 active")
+        $("#btn-contact").addClass("text-gray-400 ")
+        $("#contact").addClass("hidden")
+      $("#users").addClass("hidden") 
+        $("#btn-users").removeClass("text-gray-600 active")
+        $("#btn-users").addClass("text-gray-400 ")
+        $("#cours").addClass("hidden") 
+         $("#forum").addClass("hidden")
+        $("#pub").removeClass("hidden")
+        $("#btn-cours").removeClass("text-gray-600 active")
+        $("#btn-cours").addClass("text-gray-400 ")
+         $("#btn-forum").removeClass("text-gray-600 active")
+        $("#btn-forum").addClass("text-gray-400 ")
+        $("#btn-pub").addClass("text-gray-600 active")
+    })
+    $("#btn-forum").on("click",()=>{
+      $("#btn-contact").removeClass("text-gray-600 active")
+        $("#btn-contact").addClass("text-gray-400 ")
+        $("#contact").addClass("hidden")
+      $("#users").addClass("hidden") 
+        $("#btn-users").removeClass("text-gray-600 active")
+        $("#btn-users").addClass("text-gray-400 ")
+        $("#cours").addClass("hidden")
+        $("#pub").addClass("hidden")
+        $("#forum").removeClass("hidden")
+        $("#btn-cours").removeClass("text-gray-600 active")
+        $("#btn-cours").addClass("text-gray-400 ")
+        $("#btn-pub").removeClass("text-gray-600 active")
+        $("#btn-pub").addClass("text-gray-400 ")
+        $("#btn-forum").addClass("text-gray-600 active")
+    })
+    $("#btn-contact").on("click",()=>{
+      $("#users").addClass("hidden") 
+        $("#btn-users").removeClass("text-gray-600 active")
+        $("#btn-users").addClass("text-gray-400 ")
+        $("#forum").addClass("hidden") 
+        $("#btn-forum").removeClass("text-gray-600 active")
+        $("#btn-forum").addClass("text-gray-400 ")
+        $("#cours").addClass("hidden")
+        $("#forum").addClass("hidden")
+        $("#contact").removeClass("hidden")
+        $("#pub").addClass("hidden")
+        $("#btn-cours").removeClass("text-gray-600 active")
+        $("#btn-cours").addClass("text-gray-400 ")
+        $("#btn-pub").removeClass("text-gray-600 active")
+        $("#btn-pub").addClass("text-gray-400 ")
+        $("#btn-contact").addClass("text-gray-600 active")
+
+    })
+    $("#btn-users").on("click",()=>{
+        $("#btn-forum").removeClass("text-gray-600 active")
+        $("#btn-forum").addClass("text-gray-400 ")
+        $("#btn-contact").removeClass("text-gray-600 active")
+        $("#btn-contact").addClass("text-gray-400 ")
+        $("#contact").addClass("hidden")
+
+        $("#cours").addClass("hidden")
+        $("#pub").addClass("hidden")
+        $("#forum").addClass("hidden")
+        $("#btn-cours").removeClass("text-gray-600 active")
+        $("#btn-cours").addClass("text-gray-400 ")
+        $("#btn-pub").removeClass("text-gray-600 active")
+        $("#btn-pub").addClass("text-gray-400 ")
+        $("#btn-users").addClass("text-gray-600 active")
+        $("#users").removeClass("hidden")
+
+
+        
+    })
+  </script>
+</body>
+</html>

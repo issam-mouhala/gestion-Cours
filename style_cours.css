@@ -1,0 +1,330 @@
+*:not(header) {
+    box-sizing: border-box;
+    overflow-wrap: break-word !important;
+word-wrap: break-word !important;
+white-space: normal !important;
+}
+h4{
+    width: 600px;
+    padding:  4px;
+}
+
+footer{
+    height: 90px;
+}
+.section1{
+    background-color: #DBEAFE;
+}
+.cours {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+main {
+    width: 100%;
+    max-width: 1200px;
+    padding: 2rem;
+    margin-top: 4rem;
+}
+
+h1,
+h2,
+h3 {
+    color: #1E40AF;
+    font-weight: 600;
+}
+
+h2 {
+    font-size: 1.75rem;
+}
+
+h3 {
+    font-size: 1.25rem;
+}
+
+#carte-cours {
+    background-color: white;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.171);
+    width: 300px !important;
+}
+
+#carte-cours:hover {
+    border-left-color: #3b82f6;
+    transform: scale(1.01);
+}
+
+.carte-cours-pointer {
+    border-left-color: #1e40af;
+}
+#s{
+    color: #1E40AF;
+}
+#details {
+    background-color: transparent;
+}
+
+#definition,
+#contenu,
+.comment {
+    background-color: rgb(255, 255, 255);
+    padding: 1rem;
+    box-shadow: 1px 2px 3px #169bf32d;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    
+}
+.date{
+    font-size: small;
+    color: #40494e;
+}
+.date_repondre{
+    font-size: x-small;
+    color: #40494e;
+}
+#comment-repondre{
+    border-radius: 8px;
+
+}
+#comment{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.164);
+    border-radius: 8px;
+}
+
+#rep{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+}
+.tab-btn {
+    transition: all 0.2s ease-in-out;
+}
+
+.tab-btn:hover {
+    background-color: #eff6ff;
+}
+
+.toggle-btn {
+    transition: background-color 0.2s ease-in-out;
+}
+
+.toggle-btn:hover {
+    background-color: #f1f5f9;
+}
+.date{
+    width: 100px;
+}
+#onglets {
+    /*    background-color: #F1F5F9;*/
+    height: 40px;
+    box-shadow: 0 1px 4px rgba(0, 174, 255, 0.137);
+}
+
+.active {
+    background-color: #ffffff;
+    width: 100%t;
+    margin-bottom: 0;
+    font-weight: bold;
+    border-bottom: 2px solid #1E40AF;
+    border-radius: 5px;
+}
+
+#btn {
+    scale: 0.8;
+    transition: all 0.4s;
+    transition-timing-function: ease-in-out;
+}
+
+#btn:hover {
+    scale: 1;
+}
+
+#contenu {
+    background-color: transparent;
+    border: 0;
+    border-bottom: 2px solid;
+    border-top: 2px solid;
+    border-image: linear-gradient(to left, #1e40af, white, #0055ff) 1;
+}
+
+p,
+span {
+    font-family: 'Inter', sans-serif;
+}
+
+.annonce-content {
+    padding: 10px 15px;
+    margin-top: 10px;
+    border-left: 3px solid blue;
+}
+
+.annonce-content span {
+    color: #828688;
+}
+
+.annonce-content p {
+    font-weight: 500;
+}
+
+.repondres {
+    margin-left: 20px;
+    padding-left: 10px;
+    border-left: 1px solid #b0c9d9;
+}
+
+#syllabus,
+#annonces,
+#forums {
+    background-color: #ffffff;
+    padding: 1.1rem;
+    box-shadow: 1px 2px 3px #169bf32d,1px -2px 3px #169bf32d;
+}
+#details{
+    width: 44vw;
+}
+@media only screen and (max-width: 1080px) {
+    body {
+        overflow-x: hidden;
+    }
+    main.p-6 {
+        flex-direction: column;
+        padding: 0px;
+        margin: 0;
+    }
+    .cours {
+        padding: 0;
+        width: 100vw;
+    }
+    #carte-cours {
+        width: 80vw;
+    }
+    #details {
+        width: 80vw;
+        margin: 0;
+        margin-top: 10px;
+    }
+    #annuler,
+    #btn-repondre {
+        scale: 0.8;
+    }
+    * {
+        font-family: 'Merriweather', serif;
+        box-sizing: border-box;
+    }
+    #syllabus,
+    #annonces,
+    #forums {
+        background-color: #ffffff;
+        padding: 1.1rem;
+    }
+    nav {
+        display: none;
+    }
+}
+img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+#avatar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#toast-success{
+    position:fixed;
+    bottom: 2px;
+    right: 50px;
+
+  }
+ 
+                   
+
+
+/* Dark Mode */
+body.dark-mode{
+    background-color:  #111827;
+ }
+ section {
+    background-color: #F3F4F6;
+}
+body.dark-mode #syllabus,
+body.dark-mode #annonces,
+body.dark-mode #forums {
+    background-color: #0F172A;
+}
+body.dark-mode .cours {
+    background-color: #030712;
+}
+body.dark-mode #carte-cours,
+body.dark-mode section,
+body.dark-mode footer,
+body.dark-mode #definition {
+    background-color: #111827;
+}
+body.dark-mode header,
+body.dark-mode section ,
+body.dark-mode  textarea,body.dark-mode .comment{
+    background-color: #030712 !important;
+}
+body.dark-mode .section1 {
+    background-color: #111827 !important;
+}
+body.dark-mode #btn {
+    background-color: #111827 !important;
+    color: #eff6ff !important;
+}
+body.dark-mode #btn.active {
+    color: #1E40AF !important;
+}
+body.dark-mode #onglets {
+    background-color: #030712 !important;
+    color: #eff6ff !important;
+}
+body.dark-mode nav {
+    color: #eff6ff !important;
+}
+body.dark-mode #m {
+    color: #ff002b !important;
+}
+ #m:hover {
+    text-decoration: underline;
+   
+}
+
+
+body.dark-mode,body.dark-mode .date ,
+body.dark-mode .date_repondre{
+    color: #ffffff !important ;
+
+}
+body.dark-mode  p{
+    color: #ffffff !important ;
+
+}
+body.dark-mode #s{
+    color: #1E40AF !important;
+
+}
+body.dark-mode span.text-black{
+    color: white;
+}
+
+body.dark-mode #forums {
+    border: 1px solid rgba(255, 255, 255, 0.616);
+}
+body.dark-mode .toggle-btn:hover {
+    background-color: #0e121a;
+}
+
+
+
+
+

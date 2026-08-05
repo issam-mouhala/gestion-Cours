@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recherche - Prof. André Martin</title>
+    <style>
+        :root {
+            --professor-primary: #2563eb;
+            --professor-accent: #3b82f6;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --dark-bg: #1a1a1a;
+            --dark-card: #2d2d2d;
+            --dark-text: #e5e7eb;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .dark {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .text-center {
+            text-align: center;
+        }
+
+        .text-3xl {
+            font-size: 1.875rem;
+        }
+
+        .text-2xl {
+            font-size: 1.5rem;
+        }
+
+        .text-xl {
+            font-size: 1.25rem;
+        }
+
+        .text-sm {
+            font-size: 0.875rem;
+        }
+
+        .font-bold {
+            font-weight: 700;
+        }
+        .py-12 {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+
+        .px-4 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .mb-2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+
+        .mb-6 {
+            margin-bottom: 1.5rem;
+        }
+
+        .mb-8 {
+            margin-bottom: 2rem;
+        }
+
+        .mb-10 {
+            margin-bottom: 2.5rem;
+        }
+
+        .pt-6 {
+            padding-top: 1.5rem;
+        }
+        .text-professor-primary {
+            color: var(--professor-primary);
+        }
+
+        .text-professor-accent {
+            color: var(--professor-accent);
+        }
+
+        .text-gray-500 {
+            color: var(--gray-500);
+        }
+
+        .text-gray-600 {
+            color: var(--gray-600);
+        }
+
+        .bg-gray-50 {
+            background-color: var(--gray-50);
+        }
+
+        .bg-gray-100 {
+            background-color: var(--gray-100);
+        }
+        .dark .text-gray-600 {
+            color: var(--gray-300);
+        }
+
+        .dark .text-gray-500 {
+            color: var(--gray-400);
+        }
+
+        .dark .bg-gray-100 {
+            background-color: var(--gray-900);
+        }
+
+        .dark .bg-gray-50 {
+            background-color: var(--dark-bg);
+        }
+
+        .dark .text-professor-primary {
+            color: var(--professor-accent);
+        }
+        .prose {
+            max-width: 65ch;
+            color: var(--gray-700);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        .dark .prose {
+            color: var(--dark-text);
+        }
+
+        .prose-invert {
+            color: var(--dark-text);
+        }
+
+        .dark .prose-invert {
+            color: var(--gray-700);
+        }
+
+        .max-w-none {
+            max-width: none;
+        }
+        .section-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: var(--professor-primary);
+        }
+        .dark .section-title {
+            color: var(--professor-accent);
+        }
+        .tabs {
+            width: 100%;
+        }
+
+        .tabs-list {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .tabs-list {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .tabs-trigger {
+            padding: 0.5rem 1rem;
+            background-color: var(--gray-200);
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-weight: 500;
+            text-align: center;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .tabs-trigger:hover {
+            background-color: var(--gray-300);
+        }
+
+        .tabs-trigger.active {
+            background-color: var(--professor-primary);
+            color: white;
+        }
+
+        .dark .tabs-trigger {
+            background-color: var(--gray-800);
+            color: var(--dark-text);
+        }
+
+        .dark .tabs-trigger:hover {
+            background-color: var(--gray-700);
+        }
+        .dark .tabs-trigger.active {
+            background-color: var(--professor-accent);
+        }
+        .tabs-content {
+            display: none;
+        }
+        .tabs-content.active {
+            display: block;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .dark .card {
+            background-color: var(--dark-card);
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+        }
+        .card-content {
+            padding: 1.5rem;
+        }
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+        .grid-cols-1 {
+            grid-template-columns: repeat(1, 1fr);
+        }
+        .grid-cols-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        .grid-cols-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .gap-6 {
+            gap: 1.5rem;
+        }
+        .gap-8 {
+            gap: 2rem;
+        }
+        .border {
+            border: 1px solid var(--gray-200);
+        }
+
+        .dark .border {
+            border-color: var(--gray-700);
+        }
+
+        .rounded-lg {
+            border-radius: 0.5rem;
+        }
+
+        
+        @media (max-width: 768px) {
+            .grid-cols-2, .grid-cols-3 {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 1.75rem;
+            }
+        }
+
+    
+        .max-w-7xl {
+            max-width: 80rem;
+        }
+
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .active {
+    border-bottom: 2px solid #1e40af3d;
+    border-radius: 5px;
+    color: #3b82f6;
+}
+    </style>
+</head>
+<body>
+    <header class="bg-white shadow sticky top-0 z-50">
+        <div
+          class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between"
+        >
+          <div class="text-xl font-bold text-blue-900">
+            Prof. Issam mouhala
+          </div>
+          <nav class="space-x-6 text-sm md:text-base font-medium text-gray-700">
+            <a href="acceuil.html" class="hover:text-blue-900">Acceuil</a>
+            <a href="apropos.html" class="hover:text-blue-900">À Propos</a>
+            <a href="cours.html" class="hover:text-blue-900">Cours</a>
+            <a href="#" class="hover:text-blue-900 active">Recherche</a>
+            <a href="publication.html" class="hover:text-blue-900">Publications</a>
+            <a href="contact.html" class="hover:text-blue-900 ">Contact</a>
+          </nav>
+          <div class="flex items-center justify-between">
+            <img class="mx-1" src="" alt="" srcset="" style="border: 2px solid rgb(0, 140, 255);width: 40px !important;height: 40px !important; border-radius: 50%;">
+            <span></span>
+        </div>
+          <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"><i class="fa fa-sign-out" aria-hidden="true"></i>
+            logout </button>
+        </div>
+      </header>
+    <div>
+        <section class="bg-gray-100 dark:bg-gray-900 py-12">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center">
+                    <h1 class="text-3xl font-bold text-professor-primary dark:text-professor-accent">Recherche</h1>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section-container">
+            <h2 class="section-title">Aperçu de ma Recherche</h2>
+            
+            <div class="prose dark:prose-invert max-w-none mb-10">
+                <p>
+                    Mon travail de recherche se concentre principalement sur le développement de systèmes d'intelligence artificielle explicables, éthiques et centrés sur l'humain. Je m'intéresse particulièrement à rendre les modèles d'IA plus transparents et compréhensibles, tout en améliorant leurs performances et leur robustesse.
+                </p>
+                <p>
+                    Ma recherche est interdisciplinaire par nature, combinant des aspects d'informatique, de mathématiques, de psychologie cognitive et d'éthique. Je collabore régulièrement avec des chercheurs d'autres domaines pour développer des solutions d'IA qui répondent aux besoins réels de la société.
+                </p>
+            </div>
+            
+            
+            <h3 class="text-2xl font-bold mb-6 text-professor-primary dark:text-professor-accent">Axes de Recherche</h3>
+            
+            <div class="tabs" id="researchTabs">
+                <div class="tabs-list">
+                    <button class="tabs-trigger active" data-tab="area1">IA Explicable</button>
+                    <button class="tabs-trigger" data-tab="area2">Systèmes Distribués</button>
+                    <button class="tabs-trigger" data-tab="area3">Éthique de l'IA</button>
+                    <button class="tabs-trigger" data-tab="area4">Apprentissage Automatique</button>
+                </div>
+                
+                <div class="tabs-content active" id="area1">
+                    <div class="card">
+                        <div class="card-content pt-6">
+                            <h4 class="text-xl font-bold mb-4 text-professor-primary dark:text-professor-accent">Intelligence Artificielle Explicable</h4>
+                            <div class="prose dark:prose-invert max-w-none">
+                                <p>
+                                    L'IA explicable (XAI) vise à créer des modèles d'intelligence artificielle dont les décisions peuvent être comprises par les humains. Mon travail dans ce domaine se concentre sur:
+                                </p>
+                                <ul>
+                                    <li>Développement de techniques pour visualiser et interpréter les modèles d'apprentissage profond</li>
+                                    <li>Création de méthodes pour générer des explications naturelles des décisions d'IA</li>
+                                    <li>Évaluation de l'impact des explications sur la confiance et la compréhension des utilisateurs</li>
+                                    <li>Conception de modèles intrinsèquement interprétables</li>
+                                </ul>
+                                
+                                <p>
+                                    Projets en cours:
+                                </p>
+                                <ul>
+                                    <li>EXPLAIN-NET: Un framework pour l'explicabilité des modèles de deep learning</li>
+                                    <li>Human-AI Explanatory Dialogue: Création d'interfaces conversationnelles pour l'explicabilité</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tabs-content" id="area2">
+                    <div class="card">
+                        <div class="card-content pt-6">
+                            <h4 class="text-xl font-bold mb-4 text-professor-primary dark:text-professor-accent">Systèmes Distribués</h4>
+                            <div class="prose dark:prose-invert max-w-none">
+                                <p>
+                                    Ma recherche sur les systèmes distribués se concentre sur la conception, l'optimisation et la fiabilité des systèmes informatiques distribués à grande échelle, en particulier pour les applications d'IA:
+                                </p>
+                                <ul>
+                                    <li>Algorithmes d'apprentissage distribué efficaces et tolérants aux pannes</li>
+                                    <li>Optimisation des systèmes de traitement de données massives</li>
+                                    <li>Coordination et cohérence dans les systèmes distribués</li>
+                                    <li>Infrastructure cloud pour l'IA</li>
+                                </ul>
+                                
+                                <p>
+                                    Projets en cours:
+                                </p>
+                                <ul>
+                                    <li>DistAI: Une plateforme d'apprentissage automatique distribué</li>
+                                    <li>FaultTolerantML: Apprentissage automatique résilient dans des environnements non fiables</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tabs-content" id="area3">
+                    <div class="card">
+                        <div class="card-content pt-6">
+                            <h4 class="text-xl font-bold mb-4 text-professor-primary dark:text-professor-accent">Éthique de l'IA</h4>
+                            <div class="prose dark:prose-invert max-w-none">
+                                <p>
+                                    Mon travail sur l'éthique de l'IA explore les implications morales, sociales et juridiques des systèmes d'IA et propose des approches pour développer une IA responsable:
+                                </p>
+                                <ul>
+                                    <li>Conception de systèmes d'IA équitables et non discriminatoires</li>
+                                    <li>Développement de méthodes pour détecter et atténuer les biais dans les algorithmes</li>
+                                    <li>Élaboration de cadres éthiques pour guider le développement de l'IA</li>
+                                    <li>Étude de l'impact sociétal des technologies d'IA</li>
+                                </ul>
+                                
+                                <p>
+                                    Projets en cours:
+                                </p>
+                                <ul>
+                                    <li>FairAI: Détection et atténuation des biais dans les systèmes d'IA</li>
+                                    <li>EthicalFramework: Un guide pratique pour le développement responsable de l'IA</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tabs-content" id="area4">
+                    <div class="card">
+                        <div class="card-content pt-6">
+                            <h4 class="text-xl font-bold mb-4 text-professor-primary dark:text-professor-accent">Apprentissage Automatique</h4>
+                            <div class="prose dark:prose-invert max-w-none">
+                                <p>
+                                    Ma recherche en apprentissage automatique se concentre sur le développement d'algorithmes plus performants, plus robustes et plus efficaces:
+                                </p>
+                                <ul>
+                                    <li>Apprentissage profond pour la vision par ordinateur et le traitement du langage naturel</li>
+                                    <li>Apprentissage par renforcement pour la prise de décision complexe</li>
+                                    <li>Apprentissage par transfert et adaptation de domaine</li>
+                                    <li>Apprentissage avec peu de données (few-shot learning)</li>
+                                </ul>
+                                
+                                <p>
+                                    Projets en cours:
+                                </p>
+                                <ul>
+                                    <li>RobustDL: Amélioration de la robustesse des modèles de deep learning</li>
+                                    <li>EfficientML: Techniques d'optimisation pour l'apprentissage automatique à grande échelle</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-gray-50 dark:bg-gray-900">
+            <div class="section-container">
+                <h2 class="section-title">Projets de Recherche Actuels</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="card">
+                        <div class="card-content pt-6">
+                            <h3 class="text-xl font-bold mb-2 text-professor-primary dark:text-professor-accent">EXPLAIN-NET</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">2021 - 2024 | Financé par l'ANR</p>
+                            <p class="text-gray-600 dark:text-gray-300">
+                                Ce projet vise à développer un framework complet pour l'explicabilité des modèles d'apprentissage profond, combinant des techniques visuelles, textuelles et interactives pour rendre les décisions d'IA compréhensibles par les utilisateurs non-experts.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-content pt-6">
+                            <h3 class="text-xl font-bold mb-2 text-professor-primary dark:text-professor-accent">DistAI</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">2020 - 2023 | Collaboration avec Google AI</p>
+                            <p class="text-gray-600 dark:text-gray-300">
+                                DistAI est une plateforme d'apprentissage automatique distribué qui permet d'entraîner des modèles d'IA à grande échelle de manière efficace et tolérante aux pannes, en utilisant des ressources informatiques hétérogènes.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-content pt-6">
+                            <h3 class="text-xl font-bold mb-2 text-professor-primary dark:text-professor-accent">FairAI</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">2022 - 2025 | Financé par l'Union Européenne</p>
+                            <p class="text-gray-600 dark:text-gray-300">
+                                FairAI développe des méthodes pour détecter et atténuer les biais dans les systèmes d'IA, avec un focus particulier sur les applications à fort impact social comme les systèmes de recrutement, d'évaluation de crédit et de justice pénale.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-content pt-6">
+                            <h3 class="text-xl font-bold mb-2 text-professor-primary dark:text-professor-accent">Human-AI Collaboration</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">2023 - 2026 | Collaboration Interdisciplinaire</p>
+                            <p class="text-gray-600 dark:text-gray-300">
+                                Ce projet explore de nouveaux paradigmes pour la collaboration entre humains et systèmes d'IA, en mettant l'accent sur la complémentarité des forces et la communication efficace entre l'homme et la machine.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Collaborations -->
+        <section class="section-container">
+            <h2 class="section-title">Collaborations</h2>
+            
+            <div class="prose dark:prose-invert max-w-none mb-8">
+                <p>
+                    Je collabore régulièrement avec des chercheurs d'autres institutions et disciplines pour enrichir ma recherche et aborder des problèmes complexes sous différentes perspectives.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="font-bold mb-2 text-professor-primary dark:text-professor-accent">Google AI</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Systèmes distribués pour l'IA à grande échelle
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="font-bold mb-2 text-professor-primary dark:text-professor-accent">MIT Media Lab</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Interfaces homme-machine pour l'IA explicable
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="font-bold mb-2 text-professor-primary dark:text-professor-accent">ETH Zurich</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Robustesse des modèles d'apprentissage automatique
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="font-bold mb-2 text-professor-primary dark:text-professor-accent">CNRS</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Aspects éthiques et sociaux de l'IA
+                        </p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="font-bold mb-2 text-professor-primary dark:text-professor-accent">Stanford HAI</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            IA centrée sur l'humain
+                        </p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="font-bold mb-2 text-professor-primary dark:text-professor-accent">Hôpital Necker</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Applications médicales de l'IA
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer class="bg-gray-100 py-4">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-sm text-gray-600 space-y-2 md:space-y-0">
+          
+          <!-- Texte -->
+          <div class="text-center md:text-left 
+          ">
+            <p class="text-sm">© 2025 Prof. Issam mouhala Tous droits réservés.</p>
+            <div class="flex gap-4 justify-center md:justify-start mt-1 ml-4">
+              <a href="#" class="hover:underline text-xs
+              ">Admin</a>
+              <a href="#" class="hover:underline text-xs
+              ">Politique de confidentialité</a>
+            </div>
+          </div>
+      
+          <!-- Icônes -->
+          <div class="flex space-x-7">
+            <!-- Icône chapeau académique -->
+            <a href="#" class="text-gray-600 hover:text-gray-800">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2 1 7l11 5 9-4.09V17h2V7L12 2zm0 6.84L4.27 7 12 3.16 19.73 7 12 8.84zM6.5 10.5c-.28 0-.5.22-.5.5v2c0 .28.22.5.5.5s.5-.22.5-.5v-2c0-.28-.22-.5-.5-.5z"/>
+              </svg>
+            </a>
+      
+            <!-- Icône LinkedIn -->
+            <a href="#" class="text-gray-600 hover:text-gray-800">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.27c-.966 0-1.75-.783-1.75-1.75s.784-1.75 1.75-1.75 1.75.783 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.27h-3v-5.5c0-1.379-.033-3.15-1.922-3.15-1.926 0-2.221 1.504-2.221 3.05v5.6h-3v-10h2.884v1.367h.041c.402-.761 1.385-1.566 2.853-1.566 3.052 0 3.615 2.009 3.615 4.623v5.576z"/>
+              </svg>
+            </a>
+      
+            <!-- Icône email -->
+            <a href="#" class="text-gray-600 hover:text-gray-800">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 13.065 0 6V5l12 7L24 5v1l-12 7.065zM0 8v11h24V8l-12 7L0 8z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </footer>
+    <script>
+            $('header img').next().text(localStorage.getItem("user_nom")) 
+    $.ajax({
+    url: 'get_photo.php', // le paramètre id sera dans l'URL
+    data: { id:localStorage.getItem("user_id") },
+    method: 'GET',
+    dataType: 'json',
+    success: function(response) {
+        if (response.avatar) {
+            $('header img').attr('src', response.avatar);
+            console.log("Avatar chargé !");
+        } else {
+            $('img').attr('alt', 'Aucune image trouvée');
+        }
+    },
+    error: function(xhr, status, error) {
+        console.error('Erreur AJAX :', error);
+    }
+});
+         $("header button").on("click",()=>{
+                localStorage.clear()
+                window.location.href = `signin.html`;
+        })
+                  if (!localStorage.getItem("user_id")) {
+                window.location.href = `signin.html`;
+}
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tabs-trigger');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.tabs-trigger').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tabs-content').forEach(c => c.classList.remove('active'));
+                    
+                    tab.classList.add('active');
+                    const tabId = tab.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            function toggleDarkMode() {
+                document.body.classList.toggle('dark');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark'));
+            }
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark');
+            }
+        });
+    </script>
+</body>
+</html>

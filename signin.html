@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Page</title>
+  <link rel="stylesheet" href="signin.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="login-section">
+  
+      <div class="divider"><hr><span>      <h2>Welcome back</h2>
+      </span><hr></div>
+      <form id="login-btn">
+        <label>Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required />
+      
+        <label>Password</label>
+        <input type="password" id="password" name="password" placeholder="••••••••" required />
+      
+        <div class="options">
+          <label><input type="checkbox"> Remember me</label>
+          <a href="#">Forgot password?</a>
+        </div>
+      
+        <button type="submit" class="login-btn">Sign in to your account</button>
+        <p class="signup">Don't have an account? <a target="_blank" href="contact.html">Contact me</a></p>
+      </form>
+      
+    </div>
+    <div class="info-section">
+      <h1>Pof AZIZ MOHAMED<br> <small>Site officiel
+
+        .</small></h1>
+      <p>
+        Explorez un espace conçu pour l'apprentissage, l'échange et la réussite.
+        Des ressources pédagogiques, des annonces, des cours interactifs et bien plus encore à votre disposition.
+
+      </p>
+      <div class="customers">
+        <div class="avatars">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" />
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" />
+          <img src="https://randomuser.me/api/portraits/men/45.jpg" />
+          <img src="https://randomuser.me/api/portraits/women/22.jpg" />
+        </div>
+        <span>🎓 Plus de <strong><span>1.1k</span></strong> étudiants satisfaits</span>
+      </div>
+    </div>
+  </div>
+  
+
+
+<div id="toast-danger" class="hidden flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow-sm dark:text-gray-400 dark:bg-gray-800" role="alert">
+    <div class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"/>
+        </svg>
+        <span class="sr-only">Error icon</span>
+    </div>
+    <div class="ms-3 text-sm font-normal">Authentifcation incorect.</div>
+</div>
+
+
+
+<script>
+    $('#login-btn').on('submit', function(e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: 'verifier_user.php',
+        method: 'POST',
+        data: $(this).serialize(), // envoie email et password
+        success: function(response) {
+            try {
+              console.log(response.nom)
+              if(response.nom=="admin"){
+                window.location.href = `admin.html`;
+
+              }
+               else if(response){
+                localStorage.setItem("user_id",response.id );
+                localStorage.setItem("user_nom",  "@"+response.nom );  
+                window.location.href = `cours.html`;
+
+
+                 }else{
+                        $("#toast-danger").toggleClass("hidden")
+                        setTimeout(() => {
+                            $("#toast-danger").toggleClass("hidden")  
+                        }, 5000);
+
+                       
+                
+                 }
+              
+            } catch (e) {
+                alert("Erreur de réponse serveur : " + response);
+            }
+        }
+    });
+});
+
+                 
+    </script>
+</body>
+</html>

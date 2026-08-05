@@ -1,0 +1,44 @@
+#bord{
+    background-color: #F1F5F9;
+    padding: 4px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 4px;
+    color: gainsboro;
+
+}
+*{
+    text-transform: capitalize;
+}
+#bord button{
+width: 100%;
+border-radius: 5px;
+}
+.active{
+    background-color: #F8FAFC;
+    color: black;
+}
+.supprimer{
+    background-color: rgb(255, 49, 49);
+
+    color: #F1F5F9 !important;
+    border-radius: 4px;
+}
+.supprimer:hover{
+    background-color: rgb(235, 56, 92) !important;
+
+}
+span{
+    margin: 4px !important;
+}
+.contact{
+    background-color: rgb(0, 132, 255);
+
+    color: #F1F5F9 !important;
+    border-radius: 4px;
+}
+.contact:hover{
+    background-color: rgb(1, 5, 245) !important;
+
+}
